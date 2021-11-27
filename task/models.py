@@ -10,7 +10,7 @@ class Task(models.Model):
         ('M', 'Meduim'),
         ('H', 'High'),
     )
-    title = models.CharField(max_length=60)
+    title = models.CharField(max_length=150)
     body = models.TextField()
     start_time = models.TimeField(null=True, blank=True, verbose_name='Starts at')
     end_time = models.TimeField(null=True, blank=True, verbose_name='Finishes in')
@@ -21,3 +21,6 @@ class Task(models.Model):
 
     class Meta:
         ordering = ['done', '-start_time',]
+
+    def __str__(self):
+        return self.title
