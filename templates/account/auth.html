@@ -3,57 +3,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="{% static 'styles/main.css'%}">
-	<title>Authentication</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <title>Authentication</title>
+
+    <style>
+        .row {
+            width: 100%;
+            padding: 2px 0;
+        }
+
+        .row .col-left {
+            width: 48%;
+            float: left;
+        }
+
+        .row .col-right {
+            width: 48%;
+            float: right;
+        }
+
+        .error-box {
+            font-size: 15px;
+            font-weight: bold;
+            color: red;
+            border: 1px solid red;
+            background: pink;
+            padding: 15px 20px;
+            border-radius: 20px;
+        }
+    </style>
+
 </head>
 <body>
-	<h2>&#128525;</h2>
+<h2>&#128525;</h2>
+{% if form.errors %}
+    <div class="error-box">{{ form.errors }}</div>
+{% endif %}
 <div class="container" id="container">
-	<div class="form-container sign-up-container">
-		<form action="#">
-			<h1>Create Account</h1>
-			<div class="social-container">
-			</div>
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<button>Sign Up</button>
-		</form>
-	</div>
-	<div class="form-container sign-in-container">
-		<form action="#">
-			<h1>Sign in</h1>
-			<div class="social-container">
-				<!-- <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a> -->
-			</div>
-			<input type="email" placeholder="Email" />
-			<input type="password" placeholder="Password" />
-			<a href="#">Forgot your password?</a>
-			<button>Sign In</button>
-		</form>
-	</div>
-	<div class="overlay-container">
-		<div class="overlay">
-			<div class="overlay-panel overlay-left">
-				<h1>Welcome Back!</h1>
-				<p>To keep connected with us please login with your personal info</p>
-				<button class="ghost" id="signIn">Sign In</button>
-			</div>
-			<div class="overlay-panel overlay-right">
-				<h1>Hello, Friend!</h1>
-				<p>Enter your personal details and start journey with us</p>
-				<button class="ghost" id="signUp">Sign Up</button>
-			</div>
-		</div>
-	</div>
+    <div class="form-container sign-up-container">
+        <form method="post" action="{% url 'account:register' %}">
+            {% csrf_token %}
+            <h1>Create Account</h1>
+            <div class="social-container">
+            </div>
+            <div class="row">
+                <div class="col-left">{{ form.first_name }}</div>
+                <div class="col-right">{{ form.last_name }}</div>
+            </div>
+            <div class="row">
+                <div class="col-left">{{ form.phone }}</div>
+                <div class="col-right">{{ form.email }}</div>
+            </div>
+            <div class="row">
+                <div class="col-left">{{ form.password1 }}</div>
+                <div class="col-right">{{ form.password2 }}</div>
+            </div>
+            <div class="row">
+                {{ form.username }}
+            </div>
+            <button>Sign Up</button>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+        <form method="post" action="{% url 'account:login' %}">
+            {% csrf_token %}
+            <h1>Sign in</h1>
+            <div class="social-container">
+                <!-- <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a> -->
+            </div>
+
+            {{ form.username }}
+            {{ form.password1 }}
+            <a href="#">Forgot your password?</a>
+            <button type="submit">SIGN IN</button>
+            {% if error %}
+                <p class="error-box">{{ error }}</p>
+            {% endif %}
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>To keep connected with us please login with your personal info</p>
+                <button class="ghost" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Hello, Friend!</h1>
+                <p>Enter your personal details and start journey with us</p>
+                <button class="ghost" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-<script src="{% static 'js/main.js' %}"></script> 
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    window.onload = function () {
+        let fields = document.getElementsByTagName('input');
+        fields[1].placeholder = 'First name ...';
+        fields[2].placeholder = 'Last name ...';
+        fields[3].placeholder = 'Phone ...';
+        fields[4].placeholder = 'Email ...';
+        fields[5].placeholder = 'Password ...';
+        fields[6].placeholder = 'Confirm ...';
+        fields[7].placeholder = 'Username ...';
+        fields[9].placeholder = 'Username ...';
+        fields[10].placeholder = 'Password ...';
+    };
+</script>
 </body>
 </html>

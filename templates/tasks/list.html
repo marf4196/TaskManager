@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TaskList</title>
+</head>
+<body>
+<h1>Hello {{ request.user.get_full_name }}</h1>
+{% for i in tasks %}
+<p>{{ i.title }}</p>
+{% empty %}
+<p>No Task is available</p>
+{% endfor %}
+</body>
+</html>
