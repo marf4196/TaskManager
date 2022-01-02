@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account.apps.AccountConfig',
     'task.apps.TaskConfig',
-    'home.apps.HomeConfig',
 ]
 
 MIDDLEWARE = [
@@ -132,6 +131,8 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'main:home'
-LOGOUT_REDIRECT_URL = 'login'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_URL = 'account:login'
+LOGIN_REDIRECT_URL = 'tasks:list'
+LOGOUT_REDIRECT_URL = LOGIN_URL
